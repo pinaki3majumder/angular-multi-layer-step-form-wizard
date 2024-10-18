@@ -1,0 +1,30 @@
+<form [formGroup]="sub_formName" #sub_formDir="ngForm" formFieldFocus (ngSubmit)="sub_formDir.form.valid && sub_submit(sub_formDir)">
+
+    <div class="row" *ngFor="let sub_form of sub_formFields.formFields; let i = index">
+        <div class="col-12 form-group" *ngIf="sub_form.input == 'text'">
+            <label>{{sub_form.key}}
+                <span class="required" *ngIf="sub_formName.get(sub_form.key)?.hasError('required')">*</span>
+            </label>
+            <input [type]="sub_form.input" [formControlName]="sub_form.key" class="form-control"
+                [ngClass]="{'is-invalid' : sub_formName.get(sub_form.key)?.errors && sub_formDir.submitted }">
+            <div *ngIf="!sub_formName.get(sub_form.key).valid && sub_formName.get(sub_form.key).errors && sub_formDir.submitted">
+                <div *ngFor="let err of sub_form.valids; let k = index">
+                    <span class="error" *ngIf="sub_formName.get(sub_form.key).hasError(err.valid)">{{err.error}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6 form-group text-right">
+            <button type="submit" *ngIf="sub_stepNo !== sub_countSteps - 1" class="btn btn-success">Next</button> <!-- SUB FORM -->
+            <button type="submit" *ngIf="sub_stepNo === sub_countSteps - 1" class="btn btn-success">Submit</button> <!-- SUB FORM -->
+        </div>
+    </div>
+</form>
+
+@if (sub_stepId === '1') {
+    <app-sub-form-1
+        (subForm1_Submitted)="subForm1_Submitted($event)"
+    ></app-sub-form-1>
+}

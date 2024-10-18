@@ -1,0 +1,19 @@
+<form [formGroup]="subForm1" (ngSubmit)="onSubForm1Submit()">
+    <div class="form-group">
+
+        @if (subForm1Submitted && f['companyName'].errors) {
+            <div class="invalid-feedback">
+                @if (f['companyName'].errors['required']) {
+                    <div>companyName is required</div>
+                }
+                @if (f['companyName'].errors['minlength']) {
+                    <div>companyName must be at least 6 characters</div>
+                }
+                @if (f['companyName'].errors['maxlength']) {
+                    <div>companyName must not exceed 20 characters</div>
+                }
+            </div>
+        }
+      </div>
+
+</form>
